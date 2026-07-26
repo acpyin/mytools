@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>汉字转拼音 · MyTools</title>
+<link rel="stylesheet" href="../shared/base.css"><link rel="stylesheet" href="../shared/sidebar.css"><link rel="stylesheet" href="../shared/editor.css">
+</head><body>
+<div class="topbar"><div class="crumb-bar"><span>MyTools</span><span class="sep">/</span><span>更多</span><span class="sep">/</span><span class="here">拼音</span></div></div>
+<div class="toolbar">
+  <div class="group">
+    <label>格式
+      <select id="pattern" class="select">
+        <option value="pinyin">完整拼音</option>
+        <option value="first">拼音首字母</option>
+        <option value="initial">声母</option>
+        <option value="final">韵母</option>
+      </select>
+    </label>
+    <label>声调
+      <select id="toneType" class="select">
+        <option value="none">无声调</option>
+        <option value="symbol">声调符号</option>
+        <option value="num">声调数字</option>
+      </select>
+    </label>
+    <label>分隔符 <input id="sep" class="input" value=" " style="width:60px;"></label>
+    <label class="checkbox-row"><input type="checkbox" id="surnameChk"> 姓氏模式</label>
+    <label class="checkbox-row"><input type="checkbox" id="nonZhChk" checked> 保留非汉字</label>
+    <label class="checkbox-row"><input type="checkbox" id="vChk"> ü → v</label>
+  </div>
+  <div class="group">
+    <button class="btn primary" id="convertBtn">转换</button>
+    <button class="btn" id="copyR">复制</button>
+    <button class="btn" id="clearBtn">清空</button>
+    <button class="btn" id="sampleBtn">普通示例</button>
+    <button class="btn" id="surnameSampleBtn">姓氏示例</button>
+  </div>
+</div>
+<div class="split">
+  <div class="pane"><div class="pane-head"><span class="title">中文</span></div><div class="pane-body"><textarea id="left" spellcheck="false"></textarea></div></div>
+  <div class="pane"><div class="pane-head"><span class="title">拼音</span></div><div class="pane-body"><textarea id="right" spellcheck="false"></textarea></div></div>
+</div>
+<script src="../shared/base.js"></script><script src="../shared/tools-config.js"></script><script src="../shared/app-shell.js"></script>
+<script src="../vendor/pinyin-pro.min.js"></script>
+<script src="pinyin.js"></script>
+</body></html>

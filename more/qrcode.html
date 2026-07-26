@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>二维码 · MyTools</title>
+<link rel="stylesheet" href="../shared/base.css"><link rel="stylesheet" href="../shared/sidebar.css"><link rel="stylesheet" href="../shared/editor.css">
+<style>
+  .qr-wrap { display:flex; flex-direction:column; gap:12px; padding: 16px 18px; }
+  .qr-canvas { background:#fff; padding:14px; border:1px solid var(--border); border-radius:10px; display:flex; align-items:center; justify-content:center; }
+  .qr-canvas canvas { max-width:100%; }
+</style>
+</head><body>
+<div class="topbar"><div class="crumb-bar"><span>MyTools</span><span class="sep">/</span><span>更多</span><span class="sep">/</span><span class="here">二维码</span></div></div>
+<div class="qr-wrap">
+  <div>
+    <label>文本 <input id="text" class="input" value="https://mytools.dev" style="width:100%;"></label>
+    <label style="display:block;margin-top:8px;">尺寸
+      <select id="size" class="select"><option value="128">128</option><option value="256" selected>256</option><option value="512">512</option></select>
+    </label>
+    <label style="display:block;margin-top:8px;">前景色 <input id="fg" type="color" value="#000000"></label>
+    <label style="display:block;margin-top:8px;">背景色 <input id="bg" type="color" value="#ffffff"></label>
+  </div>
+  <div class="qr-canvas"><canvas id="qr"></canvas></div>
+</div>
+<script src="../shared/base.js"></script><script src="../shared/tools-config.js"></script><script src="../shared/app-shell.js"></script>
+<script src="../vendor/qrious.min.js"></script>
+<script src="qrcode.js"></script>
+</body></html>

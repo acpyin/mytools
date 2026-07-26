@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UUID 生成器 · MyTools</title>
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/sidebar.css">
+<link rel="stylesheet" href="../shared/editor.css">
+<style>
+  .uuid-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 12px;
+  }
+  .uuid-row .copy { margin-left: auto; }
+  .version-options {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 10px 18px;
+    background: #f8fafc;
+    border-bottom: 1px solid var(--border);
+  }
+  .version-options[hidden] { display: none; }
+  .version-options label { display: flex; align-items: center; gap: 6px; }
+  .version-options .input { width: min(360px, 70vw); }
+  .version-note { color: var(--muted); font-size: 12px; }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="crumb-bar"><span>MyTools</span><span class="sep">/</span><span>更多</span><span class="sep">/</span><span class="here">UUID 生成器</span></div>
+</div>
+
+<div class="toolbar">
+  <div class="group">
+    <label>版本：
+      <select id="versionSel" class="select">
+        <option value="4" selected>v4 随机</option>
+        <option value="1">v1 时间戳</option>
+        <option value="2">v2 DCE 安全</option>
+        <option value="3">v3 命名空间（MD5）</option>
+        <option value="5">v5 命名空间（SHA-1）</option>
+      </select>
+    </label>
+    <label>数量：
+      <input id="count" type="number" class="input" style="width:80px;" value="10" min="1" max="200">
+    </label>
+    <label class="checkbox-row"><input type="checkbox" id="upperChk"> 大写</label>
+    <label class="checkbox-row"><input type="checkbox" id="bracesChk"> 添加花括号</label>
+    <label class="checkbox-row"><input type="checkbox" id="quotesChk"> 添加引号</label>
+  </div>
+  <div class="group">
+    <button class="btn primary" id="genBtn">生成</button>
+    <button class="btn" id="copyAll">全部复制</button>
+  </div>
+</div>
+
+<div class="version-options" id="v2Options" hidden>
+  <label>本地域：
+    <select id="localDomain" class="select">
+      <option value="0">用户（Person）</option>
+      <option value="1">用户组（Group）</option>
+      <option value="2">组织（Organization）</option>
+    </select>
+  </label>
+  <label>本地标识：<input id="localId" class="input" type="number" min="0" max="4294967295" value="1000"></label>
+  <span class="version-note">v2 将本地标识和域写入基于时间的 UUID。</span>
+</div>
+<div class="version-options" id="nameOptions" hidden>
+  <label>命名空间：
+    <select id="namespacePreset" class="select">
+      <option value="6ba7b810-9dad-11d1-80b4-00c04fd430c8">DNS</option>
+      <option value="6ba7b811-9dad-11d1-80b4-00c04fd430c8">URL</option>
+      <option value="6ba7b812-9dad-11d1-80b4-00c04fd430c8">OID</option>
+      <option value="6ba7b814-9dad-11d1-80b4-00c04fd430c8">X.500</option>
+      <option value="custom">自定义 UUID</option>
+    </select>
+  </label>
+  <label id="customNamespaceLabel" hidden>自定义命名空间：<input id="customNamespace" class="input" value="6ba7b810-9dad-11d1-80b4-00c04fd430c8"></label>
+  <label>名称：<input id="nameValue" class="input" value="example.com" placeholder="例如 example.com"></label>
+  <span class="version-note">相同命名空间和名称始终生成同一个 UUID。</span>
+</div>
+
+<div style="padding:16px 18px;">
+  <div id="list" style="display:flex;flex-direction:column;gap:6px;"></div>
+</div>
+
+<script src="../shared/base.js"></script>
+<script src="../shared/tools-config.js"></script>
+<script src="../shared/app-shell.js"></script>
+<script src="uuid.js"></script>
+</body>
+</html>

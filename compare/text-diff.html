@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>文本对比 · MyTools</title>
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/sidebar.css">
+<link rel="stylesheet" href="../vendor/codemirror.min.css">
+<link rel="stylesheet" href="../vendor/codemirror-merge.min.css">
+<link rel="stylesheet" href="../shared/diff.css">
+</head>
+<body>
+<div class="topbar">
+  <div class="crumb-bar"><span>MyTools</span><span class="sep">/</span><span>对比</span><span class="sep">/</span><span class="here">文本对比</span></div>
+  <div class="topbar-actions">
+    <button class="btn ghost" id="sampleBtn">示例</button>
+    <button class="btn ghost" id="swapBtn">交换</button>
+    <button class="btn ghost" id="clearBtn">清空</button>
+    <button class="btn ghost" id="settingsBtn" title="设置">⚙ 设置</button>
+  </div>
+</div>
+<div class="status-bar">
+  <span class="page-title">文本对比</span>
+  <span>新增 <b id="addCount">0</b> · 删除 <b id="delCount">0</b></span>
+</div>
+<div class="headers-diff" id="headersDiff">
+  <div class="pane-label" id="headerA"><span id="aLabel">空</span></div>
+  <div class="pane-label" id="headerB"><span id="bLabel">空</span></div>
+</div>
+<main class="merge-wrap" id="mergeView"></main>
+<div class="settings-modal" id="settingsModal" hidden>
+  <div class="settings-card" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+    <div class="settings-head">
+      <span id="settingsTitle">差异显示设置</span>
+      <button class="close" id="settingsClose" type="button" title="关闭" aria-label="关闭设置">✕</button>
+    </div>
+    <div class="settings-body">
+      <div class="settings-section" style="border-top:0;padding-top:0;">
+        <div class="settings-section-title">差异下划线与色觉辅助</div>
+        <label>
+          <span>色觉模式</span>
+          <select id="optVisionMode">
+            <option value="default">默认（蓝 / 橙）</option>
+            <option value="deuteranopia">绿色弱 / 绿色盲</option>
+            <option value="protanopia">红色弱 / 红色盲</option>
+            <option value="tritanopia">蓝黄色弱 / 蓝黄色盲</option>
+            <option value="monochrome">单色高对比</option>
+            <option value="custom">自定义</option>
+          </select>
+        </label>
+        <label>
+          <span>A 侧下划线</span>
+          <span class="color-preview"><input type="color" id="optAUnderline" value="#0072b2"><code id="optAUnderlineText">#0072b2</code></span>
+        </label>
+        <label>
+          <span>B 侧下划线</span>
+          <span class="color-preview"><input type="color" id="optBUnderline" value="#d55e00"><code id="optBUnderlineText">#d55e00</code></span>
+        </label>
+      </div>
+    </div>
+    <div class="settings-foot">
+      <button class="btn ghost" id="settingsReset" type="button">重置默认</button>
+      <button class="btn primary" id="settingsSave" type="button">保存</button>
+    </div>
+  </div>
+</div>
+<script src="../shared/base.js"></script>
+<script src="../shared/tools-config.js"></script>
+<script src="../shared/app-shell.js"></script>
+<script defer src="../vendor/diff_match_patch.min.js"></script>
+<script defer src="../vendor/codemirror.min.js"></script>
+<script defer src="../vendor/codemirror-merge.min.js"></script>
+<script src="../shared/diff-settings.js"></script>
+<script src="text-diff.js"></script>
+</body>
+</html>

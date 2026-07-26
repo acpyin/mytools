@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>随机字符串 · MyTools</title>
+<link rel="stylesheet" href="../shared/base.css"><link rel="stylesheet" href="../shared/sidebar.css"><link rel="stylesheet" href="../shared/editor.css">
+</head><body>
+<div class="topbar"><div class="crumb-bar"><span>MyTools</span><span class="sep">/</span><span>文本</span><span class="sep">/</span><span class="here">随机字符串</span></div></div>
+<div class="toolbar">
+  <div class="group">
+    <label>长度 <input id="len" type="number" class="input" value="16" min="1" max="200" style="width:80px;"></label>
+    <label>数量 <input id="count" type="number" class="input" value="10" min="1" max="500" style="width:80px;"></label>
+    <label>包含
+      <label class="checkbox-row"><input type="checkbox" id="lowerChk" checked> 小写</label>
+      <label class="checkbox-row"><input type="checkbox" id="upperChk" checked> 大写</label>
+      <label class="checkbox-row"><input type="checkbox" id="numChk" checked> 数字</label>
+      <label class="checkbox-row"><input type="checkbox" id="symChk"> 特殊符号</label>
+    </label>
+  </div>
+  <div class="group">
+    <button class="btn primary" id="genBtn">生成</button>
+    <button class="btn" id="copyAll">全部复制</button>
+  </div>
+</div>
+<div id="list" style="display:flex;flex-direction:column;gap:6px;padding:0 18px;"></div>
+<script src="../shared/base.js"></script><script src="../shared/tools-config.js"></script><script src="../shared/app-shell.js"></script>
+<script src="random-str.js"></script>
+</body></html>

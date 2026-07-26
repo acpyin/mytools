@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>流水号生成 · MyTools</title>
+<link rel="stylesheet" href="../shared/base.css"><link rel="stylesheet" href="../shared/sidebar.css"><link rel="stylesheet" href="../shared/editor.css">
+</head><body>
+<div class="topbar"><div class="crumb-bar"><span>MyTools</span><span class="sep">/</span><span>时间</span><span class="sep">/</span><span class="here">流水号生成</span></div></div>
+<div class="toolbar">
+  <div class="group">
+    <label>前缀 <input id="prefix" class="input" value="ORD" style="width:100px;"></label>
+    <label>起始 <input id="start" type="number" class="input" value="1" style="width:80px;"></label>
+    <label>数量 <input id="count" type="number" class="input" value="20" style="width:80px;"></label>
+    <label>宽度 <input id="width" type="number" class="input" value="6" style="width:80px;"></label>
+    <label>日期格式 <select id="dateFmt" class="select"><option value="">无</option><option value="yyyy">YYYY</option><option value="yyyyMM">YYYYMM</option><option value="yyyyMMdd" selected>YYYYMMDD</option></select></label>
+  </div>
+  <div class="group">
+    <button class="btn primary" id="genBtn">生成</button>
+    <button class="btn" id="copyAll">全部复制</button>
+  </div>
+</div>
+<div id="list" style="display:flex;flex-direction:column;gap:6px;padding:0 18px;"></div>
+<script src="../shared/base.js"></script><script src="../shared/tools-config.js"></script><script src="../shared/app-shell.js"></script>
+<script src="serial-number.js"></script>
+</body></html>

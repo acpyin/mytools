@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="常用免费在线工具导航，涵盖开发、PDF、图片、设计、网络、素材与学习工具。" />
+  <title>免费在线工具导航</title>
+  <link rel="stylesheet" href="../shared/sidebar.css" />
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --card: rgba(255, 255, 255, 0.92);
+      --text: #18212f;
+      --muted: #6b7280;
+      --primary: #2563eb;
+      --primary-soft: #eaf1ff;
+      --border: #e7eaf0;
+      --shadow: 0 12px 30px rgba(20, 31, 56, 0.07);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 10% 0%, #eaf2ff 0, transparent 28%),
+        radial-gradient(circle at 90% 8%, #f3e8ff 0, transparent 24%),
+        var(--bg);
+      font-family: Inter, "PingFang SC", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+    }
+
+    /* Keep this standalone page's background after it is wrapped by the shared app shell. */
+    .main, .content { background: transparent; }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      padding: 72px 0 42px;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border: 1px solid #dbe5ff;
+      border-radius: 999px;
+      color: var(--primary);
+      background: rgba(255,255,255,.7);
+      font-size: 14px;
+      font-weight: 700;
+      backdrop-filter: blur(10px);
+    }
+
+    h1 {
+      margin: 20px 0 12px;
+      font-size: clamp(34px, 6vw, 58px);
+      line-height: 1.12;
+      letter-spacing: -0.04em;
+    }
+
+    .hero p {
+      max-width: 720px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .search-wrap {
+      position: sticky;
+      top: 14px;
+      z-index: 10;
+      margin: 28px auto 20px;
+      max-width: 760px;
+    }
+
+    .search {
+      width: 100%;
+      padding: 16px 20px 16px 50px;
+      border: 1px solid rgba(218, 223, 232, .9);
+      border-radius: 16px;
+      outline: none;
+      background: rgba(255,255,255,.92);
+      box-shadow: var(--shadow);
+      color: var(--text);
+      font-size: 16px;
+      backdrop-filter: blur(16px);
+      transition: .2s ease;
+    }
+
+    .search:focus {
+      border-color: #a9c2ff;
+      box-shadow: 0 14px 34px rgba(37,99,235,.13);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #8993a4;
+      pointer-events: none;
+    }
+
+    .category-nav {
+      display: flex;
+      gap: 10px;
+      padding: 6px 0 28px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .category-nav::-webkit-scrollbar { display: none; }
+
+    .category-nav a {
+      flex: 0 0 auto;
+      padding: 9px 13px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(255,255,255,.75);
+      color: #4b5563;
+      font-size: 14px;
+      transition: .2s ease;
+    }
+
+    .category-nav a:hover {
+      color: var(--primary);
+      border-color: #bfd0ff;
+      background: var(--primary-soft);
+    }
+
+    main { padding-bottom: 70px; }
+
+    .section {
+      margin-top: 34px;
+      scroll-margin-top: 95px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 15px;
+    }
+
+    .section h2 {
+      margin: 0;
+      font-size: 24px;
+      letter-spacing: -0.02em;
+    }
+
+    .section-count {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .tool-card {
+      position: relative;
+      min-height: 152px;
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--card);
+      box-shadow: 0 5px 20px rgba(27, 39, 65, .04);
+      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+      overflow: hidden;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-4px);
+      border-color: #c9d7ff;
+      box-shadow: var(--shadow);
+    }
+
+    .tool-card::after {
+      content: "↗";
+      position: absolute;
+      right: 18px;
+      top: 15px;
+      color: #a4acb9;
+      font-size: 18px;
+      transition: .2s ease;
+    }
+
+    .tool-card:hover::after {
+      color: var(--primary);
+      transform: translate(2px, -2px);
+    }
+
+    .tool-title {
+      margin: 0 32px 8px 0;
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .tool-desc {
+      margin: 0 0 16px;
+      min-height: 48px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .tool-domain {
+      display: inline-flex;
+      max-width: 100%;
+      padding: 5px 9px;
+      border-radius: 8px;
+      color: var(--primary);
+      background: var(--primary-soft);
+      font-size: 12px;
+      font-weight: 700;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .empty {
+      display: none;
+      margin: 46px 0;
+      padding: 36px;
+      border: 1px dashed #cfd5df;
+      border-radius: var(--radius);
+      color: var(--muted);
+      background: rgba(255,255,255,.6);
+      text-align: center;
+    }
+
+    footer {
+      padding: 28px 0 44px;
+      border-top: 1px solid rgba(220,224,232,.8);
+      color: var(--muted);
+      text-align: center;
+      font-size: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 620px) {
+      .container { width: min(100% - 22px, 1180px); }
+      .hero { padding-top: 48px; }
+      .hero p { font-size: 15px; }
+      .grid { grid-template-columns: 1fr; }
+      .section { margin-top: 28px; }
+      .tool-card { min-height: auto; }
+      .tool-desc { min-height: auto; }
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0d1117;
+        --card: rgba(20, 25, 34, .92);
+        --text: #edf2f7;
+        --muted: #9aa4b2;
+        --primary: #78a7ff;
+        --primary-soft: rgba(69, 120, 220, .16);
+        --border: #262d38;
+        --shadow: 0 12px 30px rgba(0, 0, 0, .25);
+      }
+
+      body {
+        background:
+          radial-gradient(circle at 10% 0%, rgba(31, 78, 150, .24) 0, transparent 28%),
+          radial-gradient(circle at 90% 8%, rgba(99, 46, 148, .20) 0, transparent 24%),
+          var(--bg);
+      }
+
+      .badge, .category-nav a, .search, .empty {
+        background: rgba(20,25,34,.82);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="container">
+      <span class="badge">🧰 免费在线工具导航</span>
+      <h1>常用工具，一站直达</h1>
+      <p>精选开发、PDF、图片、设计、网络诊断、素材和学习网站。无需安装，点击即可使用。</p>
+
+      <div class="search-wrap">
+        <span class="search-icon">⌕</span>
+        <input id="searchInput" class="search" type="search" placeholder="搜索网站名称、域名或功能，例如：JSON、PDF、正则…" autocomplete="off" />
+      </div>
+
+      <nav class="category-nav" id="categoryNav"></nav>
+    </div>
+  </header>
+
+  <main class="container" id="main"></main>
+  <div class="container">
+    <div class="empty" id="emptyState">没有找到匹配的工具，换个关键词试试。</div>
+  </div>
+
+  <footer>
+    <div class="container">所有链接均跳转至第三方网站，请注意隐私与文件安全。</div>
+  </footer>
+
+  <script>
+    const groups = [
+      ["综合工具", [
+        ["UPTools", "JSON、编码、二维码、时间戳等综合工具", "https://www.uptools.top"],
+        ["EasyTool", "开发、文本处理、编码和加密工具箱", "https://www.easytool.me"],
+        ["234Tool", "办公、设计、开发等综合工具导航", "https://www.234tool.com"]
+      ]],
+      ["开发工具", [
+        ["JSON Formatter", "JSON 格式化、校验与美化", "https://jsonformatter.org"],
+        ["JSONLint", "JSON 语法校验", "https://jsonlint.com"],
+        ["regex101", "正则表达式测试、解释与调试", "https://regex101.com"],
+        ["RegExr", "在线正则表达式学习与测试", "https://regexr.com"],
+        ["Hoppscotch", "轻量级在线 API 调试工具", "https://hoppscotch.io"],
+        ["Swagger Editor", "在线编辑 OpenAPI / Swagger 文档", "https://editor.swagger.io"],
+        ["JWT.io", "JWT 解析、编码与调试", "https://jwt.io"],
+        ["Crontab Guru", "Cron 表达式生成与解释", "https://crontab.guru"],
+        ["ExplainShell", "解释 Linux Shell 命令", "https://explainshell.com"],
+        ["Curl Converter", "将 curl 转换为 Java、Python 等代码", "https://curlconverter.com"],
+        ["DB Fiddle", "在线运行和测试 SQL", "https://www.db-fiddle.com"],
+        ["SQL Fiddle", "多数据库 SQL 测试环境", "https://sqlfiddle.com"],
+        ["StackEdit", "在线 Markdown 编辑器", "https://stackedit.io"],
+        ["Dillinger", "简洁的在线 Markdown 编辑器", "https://dillinger.io"],
+        ["Diffchecker", "文本、图片和文件差异比较", "https://www.diffchecker.com"],
+        ["Text Compare", "快速对比两段文本", "https://text-compare.com"],
+        ["Mermaid Live", "在线编辑和预览 Mermaid 图表", "https://mermaid.live"],
+        ["Carbon", "生成漂亮的代码截图", "https://carbon.now.sh"],
+        ["Ray.so", "简洁的代码截图生成器", "https://ray.so"],
+        ["ASCIIFlow", "绘制 ASCII 字符流程图", "https://asciiflow.com"],
+        ["JSON Crack", "JSON 数据结构可视化", "https://jsoncrack.com"],
+        ["UUID Generator", "在线生成 UUID", "https://www.uuidgenerator.net"],
+        ["Epoch Converter", "Unix 时间戳转换", "https://www.epochconverter.com"],
+        ["GitHub Gist", "分享和保存代码片段", "https://gist.github.com"]
+      ]],
+      ["编码与生成", [
+        ["QRCode Monkey", "自定义二维码生成器", "https://www.qrcode-monkey.com"],
+        ["TEC-IT Barcode", "在线生成条形码", "https://barcode.tec-it.com"]
+      ]],
+      ["PDF 工具", [
+        ["PDF24", "合并、拆分、压缩和转换 PDF", "https://tools.pdf24.org"],
+        ["iLovePDF", "常用 PDF 编辑与转换工具", "https://www.ilovepdf.com"],
+        ["Smallpdf", "PDF 压缩、转换和签名", "https://smallpdf.com"],
+        ["Sejda PDF", "在线编辑和处理 PDF", "https://www.sejda.com"]
+      ]],
+      ["图片与设计", [
+        ["Photopea", "支持 PSD 的在线图片编辑器", "https://www.photopea.com"],
+        ["Pixlr", "在线修图和图片编辑", "https://pixlr.com"],
+        ["TinyPNG", "压缩 PNG、JPG 和 WebP 图片", "https://tinypng.com"],
+        ["Squoosh", "浏览器端高质量图片压缩", "https://squoosh.app"],
+        ["remove.bg", "自动移除图片背景", "https://www.remove.bg"],
+        ["Ezgif", "GIF 制作、压缩、裁剪和转换", "https://ezgif.com"],
+        ["Canva", "海报、演示文稿和社交图片设计", "https://www.canva.com"],
+        ["ProcessOn", "流程图、思维导图和 UML", "https://www.processon.com"],
+        ["diagrams.net", "免费绘制流程图、架构图和 ER 图", "https://app.diagrams.net"],
+        ["Excalidraw", "手绘风格白板与图表工具", "https://excalidraw.com"]
+      ]],
+      ["文件转换", [
+        ["CloudConvert", "支持大量文件格式在线转换", "https://cloudconvert.com"],
+        ["Convertio", "文档、图片、音视频格式转换", "https://convertio.co"],
+        ["Zamzar", "多格式在线文件转换", "https://www.zamzar.com"]
+      ]],
+      ["网络诊断", [
+        ["Speedtest", "测试网络下载、上传和延迟", "https://www.speedtest.net"],
+        ["Fast.com", "Netflix 提供的简洁测速工具", "https://fast.com"],
+        ["WhatIsMyIP", "查询公网 IP 和网络信息", "https://www.whatismyip.com"],
+        ["IPinfo", "IP 地址和 ASN 信息查询", "https://ipinfo.io"],
+        ["DNS Checker", "全球 DNS 解析结果查询", "https://dnschecker.org"],
+        ["SSL Labs", "检测网站 HTTPS 和证书配置", "https://www.ssllabs.com/ssltest"],
+        ["Ping.pe", "全球 Ping 和路由测试", "https://ping.pe"],
+        ["HTTP Status", "批量检查 HTTP 状态码", "https://httpstatus.io"]
+      ]],
+      ["字体与配色", [
+        ["Google Fonts", "免费 Web 字体库", "https://fonts.google.com"],
+        ["Font Awesome", "常用图标库", "https://fontawesome.com"],
+        ["Iconfont", "阿里巴巴矢量图标库", "https://www.iconfont.cn"],
+        ["Icons8", "图标、插画和设计资源", "https://icons8.com"],
+        ["Flaticon", "SVG 和 PNG 图标资源", "https://www.flaticon.com"],
+        ["Coolors", "快速生成和探索配色方案", "https://coolors.co"],
+        ["Adobe Color", "配色提取与色轮工具", "https://color.adobe.com"]
+      ]],
+      ["免费素材", [
+        ["Unsplash", "高清免费摄影图片", "https://unsplash.com"],
+        ["Pexels", "免费图片和视频素材", "https://www.pexels.com"],
+        ["Pixabay", "免费图片、插画、视频和音乐", "https://pixabay.com"],
+        ["Mixkit", "免费视频、音乐和模板素材", "https://mixkit.co"],
+        ["Coverr", "免费商用视频素材", "https://coverr.co"],
+        ["Videvo", "视频、动态素材和音效资源", "https://www.videvo.net"]
+      ]],
+      ["文档与学习", [
+        ["MDN Web Docs", "Web 开发权威参考文档", "https://developer.mozilla.org"],
+        ["DevDocs", "聚合多个开发文档的离线阅读工具", "https://devdocs.io"],
+        ["Roadmap.sh", "程序员学习路线图", "https://roadmap.sh"],
+        ["LeetCode", "算法与编程练习平台", "https://leetcode.com"],
+        ["GeeksforGeeks", "编程教程、算法和面试资料", "https://www.geeksforgeeks.org"]
+      ]]
+    ];
+
+    const main = document.getElementById("main");
+    const nav = document.getElementById("categoryNav");
+    const input = document.getElementById("searchInput");
+    const emptyState = document.getElementById("emptyState");
+
+    const slugify = (text) =>
+      "section-" + text.toLowerCase().replace(/\s+/g, "-").replace(/[^\w\u4e00-\u9fa5-]/g, "");
+
+    function render(filter = "") {
+      const keyword = filter.trim().toLowerCase();
+      main.innerHTML = "";
+      nav.innerHTML = "";
+      let totalVisible = 0;
+
+      groups.forEach(([category, tools]) => {
+        const visibleTools = tools.filter(([name, desc, url]) =>
+          !keyword || [category, name, desc, url].join(" ").toLowerCase().includes(keyword)
+        );
+
+        if (!visibleTools.length) return;
+
+        totalVisible += visibleTools.length;
+        const id = slugify(category);
+
+        const navLink = document.createElement("a");
+        navLink.href = `#${id}`;
+        navLink.textContent = category;
+        nav.appendChild(navLink);
+
+        const section = document.createElement("section");
+        section.className = "section";
+        section.id = id;
+        section.innerHTML = `
+          <div class="section-head">
+            <h2>${category}</h2>
+            <span class="section-count">${visibleTools.length} 个工具</span>
+          </div>
+          <div class="grid"></div>
+        `;
+
+        const grid = section.querySelector(".grid");
+        visibleTools.forEach(([name, desc, url]) => {
+          const domain = new URL(url).hostname.replace(/^www\./, "");
+          const link = document.createElement("a");
+          link.className = "tool-card";
+          link.href = url;
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+          link.setAttribute("aria-label", `${name}：${desc}`);
+          link.innerHTML = `
+            <h3 class="tool-title">${name}</h3>
+            <p class="tool-desc">${desc}</p>
+            <span class="tool-domain">${domain}</span>
+          `;
+          grid.appendChild(link);
+        });
+
+        main.appendChild(section);
+      });
+
+      emptyState.style.display = totalVisible ? "none" : "block";
+      nav.style.display = totalVisible ? "flex" : "none";
+    }
+
+    input.addEventListener("input", (event) => render(event.target.value));
+    render();
+  </script>
+  <script src="../shared/tools-config.js"></script>
+  <script src="../shared/app-shell.js"></script>
+</body>
+</html>

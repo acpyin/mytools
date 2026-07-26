@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>时间戳转换 · MyTools</title>
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/sidebar.css">
+<link rel="stylesheet" href="../shared/editor.css">
+<style>
+  .ts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 768px) { .ts-grid { grid-template-columns: 1fr; } }
+  .ts-card { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+  .ts-card .lbl { font-size: 11px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .ts-card .v { font-family: "SFMono-Regular", Consolas, monospace; font-size: 14px; color: var(--text); word-break: break-all; }
+  .ts-card .actions { margin-top: 8px; display: flex; gap: 6px; }
+  .ts-card .input { width: 100%; }
+  .now-row {
+    background: linear-gradient(135deg, #1b5cea, #2762ea);
+    color: #fff;
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .now-row .label { font-size: 11px; opacity: 0.85; text-transform: uppercase; }
+  .now-row .value { font-family: "SFMono-Regular", Consolas, monospace; font-size: 15px; font-weight: 600; }
+  .result-line { margin-top: 11px; padding-top: 10px; border-top: 1px solid var(--border); }
+  .result-line:first-of-type { margin-top: 8px; }
+  .value-copy { display: flex; align-items: center; gap: 8px; justify-content: space-between; }
+  .value-copy .v { min-width: 0; }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="crumb-bar"><span>MyTools</span><span class="sep">/</span><span>时间</span><span class="sep">/</span><span class="here">时间戳转换</span></div>
+</div>
+
+<div style="padding:16px 18px;">
+
+  <div class="now-row">
+    <div><div class="label">当前时间</div><div class="value" id="nowTime">—</div></div>
+    <div><div class="label">10 位时间戳（秒）</div><div class="value" id="nowSec">—</div></div>
+    <div><div class="label">13 位时间戳（毫秒）</div><div class="value" id="nowMs">—</div></div>
+    <div><button class="btn" id="copyNowSec">复制 10 位</button><button class="btn" id="copyNowMs" style="margin-left:6px;">复制 13 位</button></div>
+  </div>
+
+  <h3 style="margin:6px 0 8px;font-size:13px;color:var(--text-soft);">时间戳 → 日期</h3>
+  <div class="ts-grid">
+    <div class="ts-card">
+      <div class="lbl">10 位时间戳（秒）</div>
+      <input id="secInput" class="input" inputmode="numeric" placeholder="例如 1722000000">
+      <div class="actions">
+        <button class="btn primary" id="secToDate">转为日期</button>
+        <button class="btn" id="secNowBtn">使用当前</button>
+      </div>
+      <div class="lbl">日期结果（本地）</div>
+      <div class="v" id="secDateLocal">—</div>
+      <div class="lbl" style="margin-top:10px;">日期结果（UTC）</div>
+      <div class="v" id="secDateUtc">—</div>
+      <div class="actions"><button class="btn" id="copySecDate">复制日期</button></div>
+    </div>
+    <div class="ts-card">
+      <div class="lbl">13 位时间戳（毫秒）</div>
+      <input id="msInput" class="input" inputmode="numeric" placeholder="例如 1722000000000">
+      <div class="actions">
+        <button class="btn primary" id="msToDate">转为日期</button>
+        <button class="btn" id="msNowBtn">使用当前</button>
+      </div>
+      <div class="lbl">日期结果（本地，含毫秒）</div>
+      <div class="v" id="msDateLocal">—</div>
+      <div class="lbl" style="margin-top:10px;">日期结果（UTC）</div>
+      <div class="v" id="msDateUtc">—</div>
+      <div class="actions"><button class="btn" id="copyMsDate">复制日期</button></div>
+    </div>
+  </div>
+
+  <h3 style="margin:18px 0 8px;font-size:13px;color:var(--text-soft);">日期 → 时间戳</h3>
+  <div class="ts-grid">
+    <div class="ts-card">
+      <div class="lbl">日期输入（本地时区）</div>
+      <input id="dtInput" type="datetime-local" class="input">
+      <div class="actions"><button class="btn primary" id="dtToTs">转换</button><button class="btn" id="dtNow">使用当前</button></div>
+    </div>
+    <div class="ts-card">
+      <div class="lbl">10 位时间戳（秒）</div>
+      <div class="value-copy"><div class="v" id="secResult">—</div><button class="btn" id="copySec">复制</button></div>
+      <div class="result-line">
+        <div class="lbl">13 位时间戳（毫秒）</div>
+        <div class="value-copy"><div class="v" id="msResult">—</div><button class="btn" id="copyMs">复制</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="status" class="status-msg" style="margin-top:12px;"></div>
+</div>
+
+<script src="../shared/base.js"></script>
+<script src="../shared/tools-config.js"></script>
+<script src="../shared/app-shell.js"></script>
+<script src="timestamp.js"></script>
+</body>
+</html>

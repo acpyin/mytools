@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>时间差计算 · MyTools</title>
+<link rel="stylesheet" href="../shared/base.css"><link rel="stylesheet" href="../shared/sidebar.css"><link rel="stylesheet" href="../shared/editor.css">
+<style>
+  .ts-card { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; margin-bottom: 12px; }
+  .ts-card .lbl { font-size: 11px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .ts-card .v { font-family: "SFMono-Regular", Consolas, monospace; font-size: 14px; color: var(--text); }
+</style>
+</head><body>
+<div class="topbar"><div class="crumb-bar"><span>MyTools</span><span class="sep">/</span><span>时间</span><span class="sep">/</span><span class="here">时间差计算</span></div></div>
+<div style="padding:16px 18px;flex:1;">
+  <div class="ts-card">
+    <div class="lbl">开始时间</div>
+    <input id="t1" type="datetime-local" class="input" style="width:100%;">
+    <div class="lbl" style="margin-top:10px;">结束时间</div>
+    <input id="t2" type="datetime-local" class="input" style="width:100%;">
+    <div style="display:flex;gap:6px;margin-top:10px;">
+      <button class="btn" id="now1">当前 → 1</button>
+      <button class="btn" id="now2">当前 → 2</button>
+    </div>
+  </div>
+  <div class="ts-card">
+    <div class="lbl">差值</div>
+    <div class="v" id="diff">—</div>
+  </div>
+  <div id="status" class="status-msg"></div>
+</div>
+<script src="../shared/base.js"></script><script src="../shared/tools-config.js"></script><script src="../shared/app-shell.js"></script>
+<script src="time-diff.js"></script>
+</body></html>

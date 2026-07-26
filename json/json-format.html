@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JSON 格式化 · MyTools</title>
+<meta name="description" content="JSON 格式化 / 压缩 / 转义 / 排序 / DICT 互转">
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/sidebar.css">
+<link rel="stylesheet" href="../shared/editor.css">
+</head>
+<body>
+<div class="topbar">
+  <div class="crumb-bar"><span>MyTools</span><span class="sep">/</span><span>格式化</span><span class="sep">/</span><span class="here">JSON 格式化</span></div>
+</div>
+
+<div class="toolbar">
+  <div class="group">
+    <select id="indentSel" class="select">
+      <option value="2">2 空格缩进</option>
+      <option value="4" selected>4 空格缩进</option>
+      <option value="0">Tab 缩进</option>
+    </select>
+    <label class="checkbox-row"><input type="checkbox" id="sortChk"> 自动排序键</label>
+    <label class="checkbox-row"><input type="checkbox" id="bigIntChk" checked> 大数字转字符串</label>
+  </div>
+  <div class="group">
+    <button class="btn primary" id="formatBtn">格式化</button>
+    <button class="btn" id="minifyBtn">压缩</button>
+    <button class="btn" id="escapeBtn">转义</button>
+    <button class="btn" id="unescapeBtn">反转义</button>
+    <button class="btn" id="sortBtn">排序</button>
+    <button class="btn" id="toDictBtn">→ DICT</button>
+    <button class="btn" id="rmQuotesBtn">去引号</button>
+  </div>
+  <div class="group">
+    <button class="btn" id="clearBtn">清空</button>
+    <button class="btn" id="sampleBtn">示例</button>
+    <button class="btn" id="copyBtn">复制右侧</button>
+  </div>
+  <div id="status" class="status-msg" style="margin-left:auto;"></div>
+</div>
+
+<div class="split">
+  <div class="pane">
+    <div class="pane-head"><span class="title">输入</span><span class="meta" id="leftMeta">0 字符 / 0 行</span></div>
+    <div class="pane-body">
+      <textarea id="left" spellcheck="false" placeholder='粘贴 JSON / DICT / 已转义 JSON 字符串...'></textarea>
+    </div>
+  </div>
+  <div class="pane">
+    <div class="pane-head"><span class="title">结果</span><span class="meta" id="rightMeta">0 字符 / 0 行</span></div>
+    <div class="pane-body">
+      <textarea id="right" spellcheck="false" placeholder="格式化结果..."></textarea>
+    </div>
+  </div>
+</div>
+
+<script src="../shared/base.js"></script>
+<script src="../shared/tools-config.js"></script>
+<script src="../shared/app-shell.js"></script>
+<script src="json-format.js"></script>
+</body>
+</html>

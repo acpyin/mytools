@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Emoji 表 · MyTools</title>
+<link rel="stylesheet" href="../shared/base.css"><link rel="stylesheet" href="../shared/sidebar.css"><link rel="stylesheet" href="catalog.css">
+<style>
+  .emoji-resources {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: #f8fafc;
+    border-bottom: 1px solid var(--border);
+  }
+  .emoji-resources strong { margin-right: 4px; font-size: 13px; }
+  .emoji-resource {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    background: #fff;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 12px;
+  }
+  .emoji-resource:hover, .emoji-resource:focus-visible {
+    border-color: var(--primary);
+    color: var(--primary);
+    outline: none;
+  }
+  .external-mark { color: var(--muted); font-size: 11px; }
+  @media (max-width: 540px) {
+    .emoji-resources { align-items: stretch; flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+<div class="topbar"><div class="crumb-bar"><span>MyTools</span><span class="sep">/</span><span>转换</span><span class="sep">/</span><span class="here">Emoji 表</span></div></div>
+<nav class="emoji-resources" aria-label="专业 Emoji 大全">
+  <strong>专业 Emoji 大全</strong>
+  <a class="emoji-resource" href="https://emojipedia.org/" target="_blank" rel="noopener noreferrer">
+    <span>🌐 Emojipedia</span><span class="external-mark" aria-hidden="true">↗</span>
+  </a>
+  <a class="emoji-resource" href="https://www.emojiall.com/" target="_blank" rel="noopener noreferrer">
+    <span>😀 EmojiAll</span><span class="external-mark" aria-hidden="true">↗</span>
+  </a>
+</nav>
+<div class="catalog-toolbar">
+  <input id="emojiSearch" class="input" type="search" autocomplete="off" aria-label="搜索 Emoji" placeholder="按名称、关键词或 Emoji 搜索…">
+  <div class="catalog-tabs" id="emojiTabs" aria-label="Emoji 分类"></div>
+  <span id="emojiCount" class="result-count" aria-live="polite"></span>
+</div>
+<main id="emojiGrid" class="emoji-grid" aria-label="Emoji 列表"></main>
+<script src="../shared/base.js"></script><script src="../shared/tools-config.js"></script><script src="../shared/app-shell.js"></script><script src="emoji.js"></script>
+</body></html>

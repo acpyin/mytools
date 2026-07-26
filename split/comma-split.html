@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>逗号分隔 · MyTools</title>
+<link rel="stylesheet" href="../shared/base.css"><link rel="stylesheet" href="../shared/sidebar.css"><link rel="stylesheet" href="../shared/editor.css">
+</head><body>
+<div class="topbar"><div class="crumb-bar"><span>MyTools</span><span class="sep">/</span><span>分隔</span><span class="sep">/</span><span class="here">逗号分隔</span></div></div>
+<div class="toolbar">
+  <div class="group">
+    <button class="btn primary" id="splitBtn">按逗号分隔 →</button>
+    <button class="btn" id="joinBtn">← 行合并逗号</button>
+    <button class="btn" id="sortBtn">排序</button>
+    <button class="btn" id="uniqueBtn">去重</button>
+    <button class="btn" id="copyR">复制</button>
+  </div>
+  <div class="group"><button class="btn" id="clearBtn">清空</button><button class="btn" id="sampleBtn">示例</button></div>
+  <div id="status" class="status-msg" style="margin-left:auto;"></div>
+</div>
+<div class="split">
+  <div class="pane"><div class="pane-head"><span class="title">原文</span></div><div class="pane-body"><textarea id="left" spellcheck="false" placeholder="apple,banana,orange..."></textarea></div></div>
+  <div class="pane"><div class="pane-head"><span class="title">结果</span></div><div class="pane-body"><textarea id="right" spellcheck="false" placeholder="..."></textarea></div></div>
+</div>
+<script src="../shared/base.js"></script><script src="../shared/tools-config.js"></script><script src="../shared/app-shell.js"></script>
+<script src="comma-split.js"></script>
+</body></html>

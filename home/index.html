@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MyTools · 开发者工具集</title>
+<meta name="description" content="免费的在线开发者工具集。48 个常用工具，纯静态本地运行，数据不上传。">
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/sidebar.css">
+<link rel="stylesheet" href="home.css">
+<style>
+  .welcome {
+    padding: 32px 24px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .welcome .home-hero {
+    margin: 0 0 22px;
+  }
+  .recent-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 10px;
+    margin-top: 12px;
+  }
+</style>
+<!-- Inline redirect: runs before any script. If user has previously used a tool,
+     jump straight to it. Only triggers once per browser session. -->
+<script>
+  (function () {
+    try {
+      if (!sessionStorage.getItem('mytools.visited')) {
+        sessionStorage.setItem('mytools.visited', '1');
+        var last = localStorage.getItem('mytools.last');
+        if (last && last !== '/home/index.html' && /^\/[a-z-]+\/[^/]+\.html$/.test(last)) {
+          location.replace(last);
+        }
+      }
+    } catch (e) {}
+  })();
+</script>
+</head>
+<body>
+<div class="content">
+  <div class="welcome">
+    <div class="home-hero">
+      <h1>开发者常用工具，一站直达</h1>
+      <p>48 个免费在线工具 · 纯静态运行 · 数据不上传服务器 · 100% 浏览器端处理</p>
+    </div>
+
+    <div id="recentSection" style="display:none;">
+      <h2 class="page-title" style="margin: 0 0 12px; font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px;">最近使用</h2>
+      <div class="recent-grid" id="recentGrid"></div>
+      <p style="margin-top:16px; font-size:12px; color:var(--muted);">
+        <button class="btn ghost" id="clearRecentBtn" style="font-size:12px;">清空最近记录</button>
+      </p>
+    </div>
+
+    <div id="allSection">
+      <h2 class="page-title" style="margin: 8px 0 12px; font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px;">所有工具</h2>
+      <div id="categoriesGrid"></div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer"><span>MyTools © 2026 · 纯静态 · 数据不上传</span></footer>
+
+<script src="../shared/base.js"></script>
+<script src="../shared/tools-config.js"></script>
+<script src="../shared/app-shell.js"></script>
+<script src="home.js"></script>
+</body>
+</html>

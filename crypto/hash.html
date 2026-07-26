@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MD5 / SHA 摘要 · MyTools</title>
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/sidebar.css">
+<link rel="stylesheet" href="../shared/editor.css">
+<style>
+  .hash-results { display: flex; flex-direction: column; gap: 8px; }
+  .hash-row {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+  }
+  .hash-row .label {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+  .hash-row .value {
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 12px;
+    word-break: break-all;
+    color: var(--text);
+    line-height: 1.5;
+  }
+  .hash-row .actions { margin-top: 6px; display: flex; gap: 6px; }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="crumb-bar"><span>MyTools</span><span class="sep">/</span><span>加解密</span><span class="sep">/</span><span class="here">MD5 / SHA</span></div>
+</div>
+
+<div class="toolbar">
+  <div class="group">
+    <label class="checkbox-row"><input type="checkbox" id="upperChk" checked> 大写输出</label>
+  </div>
+  <div class="group">
+    <button class="btn" id="clearBtn">清空</button>
+    <button class="btn" id="sampleBtn">示例</button>
+  </div>
+  <div id="status" class="status-msg" style="margin-left:auto;"></div>
+</div>
+
+<div style="padding: 16px 18px;">
+  <label style="display:block;font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">输入</label>
+  <textarea id="input" spellcheck="false" style="width:100%;height:200px;padding:12px 16px;border:1px solid var(--border);border-radius:8px;font-family:'SFMono-Regular',Consolas,monospace;font-size:13px;line-height:1.55;background:#fff;color:var(--text);resize:vertical;outline:none;" placeholder="输入要计算摘要的文本..."></textarea>
+  <div class="hash-results" id="hashResults" style="margin-top:14px;"></div>
+</div>
+
+<script src="../shared/base.js"></script>
+<script src="../shared/tools-config.js"></script>
+<script src="../shared/app-shell.js"></script>
+<script src="../vendor/md5.min.js"></script>
+<script src="hash.js"></script>
+</body>
+</html>

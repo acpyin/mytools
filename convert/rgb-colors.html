@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RGB 工具 · MyTools</title>
+<link rel="stylesheet" href="../shared/base.css"><link rel="stylesheet" href="../shared/sidebar.css"><link rel="stylesheet" href="catalog.css">
+<style>
+  .rgb-tool{padding:18px;background:#f8fafc;border-bottom:1px solid var(--border)}
+  .rgb-panel{display:grid;grid-template-columns:150px minmax(0,1fr);max-width:860px;margin:auto;background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden}
+  .rgb-preview{min-height:190px;display:flex;align-items:end;justify-content:center;padding:14px;transition:background .12s}
+  .rgb-preview span{padding:5px 9px;border-radius:6px;background:rgba(255,255,255,.86);color:#111827;font:12px monospace}
+  .rgb-controls{padding:16px;display:grid;gap:13px}
+  .rgb-row{display:grid;grid-template-columns:44px minmax(0,1fr) 78px;gap:8px;align-items:center}
+  .rgb-row label{font-weight:650}.rgb-row input[type=range]{width:100%}
+  .rgb-number{width:78px}.hex-row{display:flex;gap:8px;align-items:end;flex-wrap:wrap}
+  .hex-row label{display:grid;gap:5px;font-size:12px}.hex-row .input{width:150px;text-transform:uppercase;font-family:monospace}
+  .native-picker{width:46px;height:36px;padding:2px;border:1px solid var(--border);border-radius:6px;background:#fff;cursor:pointer}
+  .rgb-hint{color:var(--muted);font-size:12px}
+  @media(max-width:600px){.rgb-panel{grid-template-columns:1fr}.rgb-preview{min-height:120px}.rgb-tool{padding:12px}}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="crumb-bar"><span>MyTools</span><span class="sep">/</span><span>转换</span><span class="sep">/</span><span class="here">RGB 工具</span></div></div>
+<section class="rgb-tool" aria-labelledby="converterTitle">
+  <div class="rgb-panel">
+    <div id="rgbPreview" class="rgb-preview"><span id="previewText">#1E90FF</span></div>
+    <div class="rgb-controls">
+      <strong id="converterTitle">RGB ↔ 十六进制颜色码</strong>
+      <div class="rgb-row"><label for="redRange">R</label><input id="redRange" type="range" min="0" max="255" value="30"><input id="redNumber" class="input rgb-number" type="number" min="0" max="255" value="30" aria-label="红色值"></div>
+      <div class="rgb-row"><label for="greenRange">G</label><input id="greenRange" type="range" min="0" max="255" value="144"><input id="greenNumber" class="input rgb-number" type="number" min="0" max="255" value="144" aria-label="绿色值"></div>
+      <div class="rgb-row"><label for="blueRange">B</label><input id="blueRange" type="range" min="0" max="255" value="255"><input id="blueNumber" class="input rgb-number" type="number" min="0" max="255" value="255" aria-label="蓝色值"></div>
+      <div class="hex-row">
+        <label for="hexInput">十六进制颜色码<input id="hexInput" class="input" value="#1E90FF" maxlength="7" spellcheck="false"></label>
+        <input id="nativeColor" class="native-picker" type="color" value="#1e90ff" aria-label="选择颜色">
+        <button id="copyHex" class="btn" type="button">复制 HEX</button><button id="copyRgb" class="btn" type="button">复制 RGB</button>
+      </div>
+      <div id="rgbHint" class="rgb-hint" aria-live="polite">rgb(30, 144, 255) · #1E90FF</div>
+    </div>
+  </div>
+</section>
+<div class="catalog-toolbar">
+  <input id="colorSearch" class="input" type="search" autocomplete="off" aria-label="搜索颜色" placeholder="搜索名称、HEX 或 RGB…">
+  <div class="catalog-tabs" aria-label="颜色内容">
+    <button type="button" class="active" data-view="standard">RGB 颜色对照表</button>
+    <button type="button" data-view="palettes">精选配色</button>
+  </div>
+  <span id="colorCount" class="result-count" aria-live="polite"></span>
+</div>
+<main>
+  <div id="standardView" class="color-grid" aria-label="RGB 颜色对照表"></div>
+  <section id="paletteView" class="palette-section" hidden>
+    <h2>常见好看配色</h2><div id="paletteList" class="palette-list"></div>
+  </section>
+</main>
+<script src="../shared/base.js"></script><script src="../shared/tools-config.js"></script><script src="../shared/app-shell.js"></script><script src="rgb-colors.js"></script>
+</body></html>

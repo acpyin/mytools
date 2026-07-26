@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS 格式化 · MyTools</title>
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/sidebar.css">
+<link rel="stylesheet" href="../shared/editor.css">
+</head>
+<body>
+<div class="topbar"><div class="crumb-bar"><span>MyTools</span><span class="sep">/</span><span>格式化</span><span class="sep">/</span><span class="here">CSS 格式化</span></div></div>
+<div class="toolbar">
+  <div class="group"><label>缩进 <select id="indentSel" class="select"><option>2</option><option selected>4</option></select></label></div>
+  <div class="group">
+    <button class="btn primary" id="formatBtn">美化</button>
+    <button class="btn" id="minifyBtn">压缩</button>
+    <button class="btn" id="swapBtn">交换</button>
+    <button class="btn" id="copyR">复制</button>
+  </div>
+  <div class="group"><button class="btn" id="clearBtn">清空</button><button class="btn" id="sampleBtn">示例</button></div>
+  <div id="status" class="status-msg" style="margin-left:auto;"></div>
+</div>
+<div class="split">
+  <div class="pane"><div class="pane-head"><span class="title">原文</span></div><div class="pane-body"><textarea id="left" spellcheck="false"></textarea></div></div>
+  <div class="pane"><div class="pane-head"><span class="title">结果</span></div><div class="pane-body"><textarea id="right" spellcheck="false"></textarea></div></div>
+</div>
+<script src="../shared/base.js"></script><script src="../shared/tools-config.js"></script><script src="../shared/app-shell.js"></script>
+<script src="../vendor/beautify-html.min.js"></script>
+<script src="../vendor/csso.min.js"></script>
+<script src="format-css.js"></script>
+</body></html>

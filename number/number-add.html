@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数字加减 · MyTools</title>
+<link rel="stylesheet" href="../shared/base.css"><link rel="stylesheet" href="../shared/sidebar.css"><link rel="stylesheet" href="../shared/editor.css">
+</head><body>
+<div class="topbar"><div class="crumb-bar"><span>MyTools</span><span class="sep">/</span><span>数字</span><span class="sep">/</span><span class="here">数字加减</span></div></div>
+<div class="toolbar">
+  <div class="group">
+    <label>每行 <input id="addBy" type="number" class="input" value="1" style="width:100px;"></label>
+    <label class="checkbox-row"><input type="checkbox" id="floorChk"> 仅输出整数</label>
+  </div>
+  <div class="group">
+    <button class="btn primary" id="addBtn">加</button>
+    <button class="btn primary" id="subBtn">减</button>
+    <button class="btn primary" id="mulBtn">×</button>
+  </div>
+  <div class="group"><button class="btn" id="copyR">复制</button><button class="btn" id="clearBtn">清空</button><button class="btn" id="sampleBtn">示例</button></div>
+  <div id="status" class="status-msg" style="margin-left:auto;"></div>
+</div>
+<div class="split">
+  <div class="pane"><div class="pane-head"><span class="title">原文</span></div><div class="pane-body"><textarea id="left" spellcheck="false"></textarea></div></div>
+  <div class="pane"><div class="pane-head"><span class="title">结果</span></div><div class="pane-body"><textarea id="right" spellcheck="false"></textarea></div></div>
+</div>
+<script src="../shared/base.js"></script><script src="../shared/tools-config.js"></script><script src="../shared/app-shell.js"></script>
+<script src="number-add.js"></script>
+</body></html>

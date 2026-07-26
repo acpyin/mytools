@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JSON 合并 · MyTools</title>
+<link rel="stylesheet" href="../shared/base.css"><link rel="stylesheet" href="../shared/sidebar.css"><link rel="stylesheet" href="../shared/editor.css">
+<style>
+  .merge-workspace {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.08fr);
+    flex: 1;
+    min-height: 0;
+    background: #fff;
+  }
+  .merge-pane {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+    border-right: 1px solid var(--border);
+  }
+  .merge-pane:last-child { border-right: 0; background: #fbfdff; }
+  .merge-pane:last-child .pane-head { background: var(--primary-soft); }
+  .merge-pane .pane-body { min-height: 460px; }
+  .merge-pane textarea { width: 100%; height: 100%; min-height: 460px; }
+  .pane-tag {
+    display: inline-grid;
+    place-items: center;
+    width: 21px;
+    height: 21px;
+    border-radius: 5px;
+    background: #e8eef7;
+    color: #475569;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .result-tag { background: var(--primary); color: #fff; }
+  #result { background: #fbfdff; }
+  @media (max-width: 1050px) {
+    .merge-workspace { grid-template-columns: 1fr 1fr; }
+    .merge-pane:nth-child(2) { border-right: 0; }
+    .merge-pane:last-child { grid-column: 1 / -1; border-top: 1px solid var(--border); }
+    .merge-pane:last-child .pane-body, .merge-pane:last-child textarea { min-height: 300px; }
+  }
+  @media (max-width: 680px) {
+    .merge-workspace { display: block; }
+    .merge-pane { border-right: 0; border-bottom: 1px solid var(--border); }
+    .merge-pane .pane-body, .merge-pane textarea { min-height: 260px; }
+    .toolbar .group { width: 100%; }
+    .toolbar .checkbox-row { order: 5; }
+  }
+</style>
+</head><body>
+<div class="topbar"><div class="crumb-bar"><span>MyTools</span><span class="sep">/</span><span>JSON</span><span class="sep">/</span><span class="here">JSON 合并</span></div></div>
+<div class="toolbar">
+  <div class="group">
+    <button class="btn primary" id="mergeBtn">合并 →</button>
+    <label class="checkbox-row"><input type="checkbox" id="bWinChk"> b 优先（同名键）</label>
+    <button class="btn" id="copyR">复制</button>
+    <button class="btn" id="clearBtn">清空</button>
+    <button class="btn" id="sampleBtn">示例</button>
+  </div>
+  <div id="status" class="status-msg" style="margin-left:auto;"></div>
+</div>
+<div class="merge-workspace">
+  <section class="merge-pane" aria-labelledby="leftTitle">
+    <div class="pane-head"><span class="title" id="leftTitle"><span class="pane-tag">A</span>源 JSON</span><span class="meta">基础数据</span></div>
+    <div class="pane-body"><textarea id="left" aria-label="源 JSON A" spellcheck="false" placeholder="输入第一个 JSON"></textarea></div>
+  </section>
+  <section class="merge-pane" aria-labelledby="rightTitle">
+    <div class="pane-head"><span class="title" id="rightTitle"><span class="pane-tag">B</span>合并 JSON</span><span class="meta">追加或覆盖数据</span></div>
+    <div class="pane-body"><textarea id="right" aria-label="合并 JSON B" spellcheck="false" placeholder="输入第二个 JSON"></textarea></div>
+  </section>
+  <section class="merge-pane" aria-labelledby="resultTitle">
+    <div class="pane-head"><span class="title" id="resultTitle"><span class="pane-tag result-tag">✓</span>合并结果</span><span class="meta" id="statusOut"></span></div>
+    <div class="pane-body"><textarea id="result" aria-label="JSON 合并结果" spellcheck="false" readonly></textarea></div>
+  </section>
+</div>
+<script src="../shared/base.js"></script><script src="../shared/tools-config.js"></script><script src="../shared/app-shell.js"></script>
+<script src="json-merge.js"></script>
+</body></html>

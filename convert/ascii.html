@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASCII 表 · MyTools</title>
+<link rel="stylesheet" href="../shared/base.css"><link rel="stylesheet" href="../shared/sidebar.css"><link rel="stylesheet" href="../shared/editor.css">
+<style>
+  .ascii-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 6px; padding: 14px 18px; }
+  .ascii-cell { background: #fff; border: 1px solid var(--border); border-radius: 6px; padding: 8px 6px; text-align: center; cursor: pointer; transition: all .1s; font-size: 12px; }
+  .ascii-cell:hover { background: var(--primary-soft); border-color: var(--primary); }
+  .ascii-cell .code { color: var(--muted); font-size: 10px; font-family: monospace; }
+  .ascii-cell .ch { font-size: 16px; margin-top: 4px; font-family: monospace; }
+  .filter-bar { padding: 10px 18px; background: #fff; border-bottom: 1px solid var(--border); display: flex; gap: 8px; align-items: center; }
+</style>
+</head><body>
+<div class="topbar"><div class="crumb-bar"><span>MyTools</span><span class="sep">/</span><span>转换</span><span class="sep">/</span><span class="here">ASCII 表</span></div></div>
+<div class="filter-bar">
+  <label>类别 <select id="rangeSel" class="select">
+    <option value="all">全部 (0-127)</option>
+    <option value="control">控制字符 (0-31,127)</option>
+    <option value="print">可打印 (32-126)</option>
+    <option value="digit">数字 (48-57)</option>
+    <option value="upper">大写字母 (65-90)</option>
+    <option value="lower">小写字母 (97-122)</option>
+  </select></label>
+  <input id="filter" class="input" placeholder="搜索字符 / 编码…" style="max-width:240px;">
+  <span style="color:var(--muted);font-size:12px;">点击单元格复制</span>
+</div>
+<div class="ascii-grid" id="grid"></div>
+<script src="../shared/base.js"></script><script src="../shared/tools-config.js"></script><script src="../shared/app-shell.js"></script>
+<script src="ascii.js"></script>
+</body></html>

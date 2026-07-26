@@ -1,0 +1,237 @@
+/* diff-page specific styles — wraps the shared chrome */
+.diff-page {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.headers-diff {
+  display: grid;
+  grid-template-columns: 47% 6% 47%;
+  background: #f1f5f9;
+  border-bottom: 1px solid #e2e8f0;
+}
+.headers-diff .pane-label {
+  padding: 5px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  border-right: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text);
+}
+.headers-diff .pane-label:nth-child(2) {
+  grid-column: 3;
+  border-right: none;
+  border-left: 1px solid #e2e8f0;
+}
+.headers-diff .pane-label .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: #94a3b8;
+}
+.headers-diff .pane-label.valid .dot,
+.dot.valid { background: var(--add) !important; }
+.headers-diff .pane-label.invalid .dot,
+.dot.invalid { background: var(--del) !important; }
+.headers-diff .pane-label.valid { color: var(--add); }
+.headers-diff .pane-label.invalid { color: var(--del); }
+.headers-diff .muted { color: #64748b; font-weight: 400; }
+
+.merge-wrap {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  background: #fff;
+}
+.merge-wrap .CodeMirror-merge,
+.merge-wrap .CodeMirror { height: 100% !important; }
+.merge-wrap .CodeMirror-merge-pane,
+.merge-wrap .CodeMirror-merge-gap {
+  height: 100% !important;
+}
+.merge-wrap .CodeMirror {
+  font-family: "SFMono-Regular", Consolas, Menlo, monospace !important;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+/* Line-number gutter: transparent, separated from the editor by one full-height rule. */
+.CodeMirror-gutters {
+  top: 0;
+  bottom: 0;
+  height: auto !important;
+  min-height: 0 !important;
+  box-sizing: border-box;
+  background: transparent !important;
+  border-right: 1px solid var(--border-strong) !important;
+}
+.CodeMirror-gutter.CodeMirror-linenumbers {
+  height: 100% !important;
+  min-height: 0 !important;
+  background: transparent !important;
+}
+.CodeMirror-linenumber {
+  color: #b8b8b8 !important;
+  padding: 0 6px 0 4px !important;
+  background: transparent !important;
+  min-width: 28px;
+}
+/* Difference state changes the number color only; the gutter remains transparent. */
+.CodeMirror-merge-inserted .CodeMirror-linenumber,
+.CodeMirror-merge-inserted ~ * .CodeMirror-linenumber { color: var(--add) !important; font-weight: 600; }
+.CodeMirror-merge-deleted .CodeMirror-linenumber { color: var(--del) !important; font-weight: 600; }
+.CodeMirror-merge-r-chunk .CodeMirror-linenumber,
+.CodeMirror-merge-l-chunk .CodeMirror-linenumber { color: #64748b !important; }
+
+/* Force the entire editor scroll area to have the same fill background */
+.CodeMirror,
+.CodeMirror-scroll,
+.CodeMirror-sizer { background-color: #fff !important; }
+
+.CodeMirror-merge-inserted,
+.CodeMirror-merge-inserted .CodeMirror-line { background-color: rgba(22,163,74,0.12) !important; }
+.CodeMirror-merge-deleted,
+.CodeMirror-merge-deleted .CodeMirror-line { background-color: rgba(220,38,38,0.12) !important; }
+.CodeMirror-merge-r-chunk,
+.CodeMirror-merge-l-chunk { background-color: #e8e8e8 !important; color: #64748b !important; }
+.CodeMirror-merge-copybuttons {
+  background: #f1f5f9 !important;
+  border-left: 1px solid #e2e8f0 !important;
+  border-right: 1px solid #e2e8f0 !important;
+}
+.CodeMirror-selected { background: rgba(27,92,234,0.25) !important; }
+
+/* Configurable inline-difference underlines. Pane selectors make the colors
+ * independent from MergeView's internal inserted/deleted class direction. */
+:root {
+  --diff-a-underline: #0072b2;
+  --diff-b-underline: #d55e00;
+  --diff-a-underline-style: solid;
+  --diff-b-underline-style: dashed;
+}
+.CodeMirror-merge-editor .CodeMirror-merge-r-inserted,
+.CodeMirror-merge-editor .CodeMirror-merge-r-deleted,
+.CodeMirror-merge-editor .CodeMirror-merge-l-inserted,
+.CodeMirror-merge-editor .CodeMirror-merge-l-deleted {
+  background-image: none !important;
+  text-decoration-line: underline;
+  text-decoration-color: var(--diff-a-underline);
+  text-decoration-style: var(--diff-a-underline-style);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+}
+.CodeMirror-merge-right .CodeMirror-merge-r-inserted,
+.CodeMirror-merge-right .CodeMirror-merge-r-deleted,
+.CodeMirror-merge-right .CodeMirror-merge-l-inserted,
+.CodeMirror-merge-right .CodeMirror-merge-l-deleted {
+  background-image: none !important;
+  text-decoration-line: underline;
+  text-decoration-color: var(--diff-b-underline);
+  text-decoration-style: var(--diff-b-underline-style);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+}
+
+/* Settings modal */
+.settings-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+.settings-modal[hidden] { display: none; }
+.settings-card {
+  width: min(440px, 92vw);
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  overflow: hidden;
+}
+.settings-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  font-weight: 600;
+}
+.settings-head .close {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: var(--muted);
+}
+.settings-body {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.settings-body label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  gap: 10px;
+}
+.settings-body select, .settings-body input[type="number"] {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 13px;
+  font-family: inherit;
+  width: 130px;
+}
+.settings-section {
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.settings-section-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-soft);
+}
+.settings-body input[type="color"] {
+  width: 48px;
+  height: 30px;
+  padding: 2px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+}
+.color-preview {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.color-preview code {
+  min-width: 72px;
+  color: var(--text-soft);
+  font-size: 11px;
+}
+.settings-foot {
+  padding: 12px 18px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+.settings-foot .btn.primary { background: var(--primary); color: #fff; border-color: var(--primary); }
+.settings-foot .btn.primary:hover { background: #1451c8; border-color: #1451c8; }

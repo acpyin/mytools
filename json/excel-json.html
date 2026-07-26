@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Excel JSON 互转 · MyTools</title>
+<link rel="stylesheet" href="../shared/base.css"><link rel="stylesheet" href="../shared/sidebar.css"><link rel="stylesheet" href="../shared/editor.css">
+<style>
+  .convert-options{display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding:10px 18px;background:#fff;border-bottom:1px solid var(--border)}
+  .convert-options label{display:flex;gap:6px;align-items:center;font-size:12px}.convert-options .spacer{flex:1}
+  .excel-workspace{display:grid;grid-template-columns:minmax(0,1fr) 56px minmax(0,1fr);min-height:calc(100vh - 118px)}
+  .excel-pane{display:flex;min-width:0;flex-direction:column;background:#fff}.excel-pane header{padding:10px 14px;border-bottom:1px solid var(--border);font-weight:650}
+  .excel-pane textarea{flex:1;min-height:420px;resize:none;border:0;outline:0;padding:14px;font:13px/1.6 Consolas,monospace}
+  .convert-actions{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:#f8fafc;border-inline:1px solid var(--border)}
+  .convert-actions button{width:38px;height:34px;padding:0}
+  .drop-zone{margin:12px;border:1px dashed var(--border);border-radius:8px;padding:9px;text-align:center;color:var(--muted);font-size:12px}
+  .drop-zone.drag{border-color:var(--primary);background:var(--primary-soft)}
+  @media(max-width:760px){.excel-workspace{grid-template-columns:1fr}.convert-actions{flex-direction:row;padding:8px;border:0;border-block:1px solid var(--border)}.excel-pane textarea{min-height:260px}}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="crumb-bar"><span>MyTools</span><span class="sep">/</span><span>转换</span><span class="sep">/</span><span class="here">Excel ↔ JSON</span></div>
+<div class="toolbar"><button id="sampleBtn" class="btn">示例</button><button id="clearBtn" class="btn">清空</button></div></div>
+<div class="convert-options">
+  <label>JSON 结构 <select id="jsonShape" class="select"><option value="objects">对象数组（首行为字段名）</option><option value="arrays">二维数组</option></select></label>
+  <label>缩进 <select id="indent" class="select"><option value="2">2 空格</option><option value="4">4 空格</option><option value="0">压缩</option></select></label>
+  <label><input id="smartTypes" type="checkbox" checked> 自动识别数字/布尔值</label><span class="spacer"></span>
+  <button id="copyJson" class="btn">复制 JSON</button><button id="downloadJson" class="btn">下载 JSON</button><button id="downloadExcel" class="btn">下载 Excel</button>
+</div>
+<main class="excel-workspace">
+  <section class="excel-pane"><header>Excel / 表格数据</header>
+    <div id="dropZone" class="drop-zone">粘贴 Excel 单元格，或点击/拖入 .xlsx、.xls、.csv 文件<input id="fileInput" type="file" accept=".xlsx,.xls,.xlsm,.csv" hidden></div>
+    <textarea id="tableInput" aria-label="Excel 表格数据" spellcheck="false" placeholder="姓名&#9;年龄&#9;启用&#10;张三&#9;28&#9;true"></textarea>
+  </section>
+  <div class="convert-actions" aria-label="转换操作"><button id="toJson" class="btn primary" title="表格转 JSON">→</button><button id="toTable" class="btn" title="JSON 转表格">←</button></div>
+  <section class="excel-pane"><header>JSON</header><textarea id="jsonInput" aria-label="JSON 数据" spellcheck="false" placeholder='[{"姓名":"张三","年龄":28}]'></textarea></section>
+</main>
+<script src="../shared/base.js"></script><script src="../vendor/xlsx.full.min.js"></script><script src="../shared/tools-config.js"></script><script src="../shared/app-shell.js"></script><script src="excel-json.js"></script>
+</body></html>
