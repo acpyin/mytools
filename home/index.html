@@ -32,7 +32,7 @@
       if (!sessionStorage.getItem('mytools.visited')) {
         sessionStorage.setItem('mytools.visited', '1');
         var last = localStorage.getItem('mytools.last');
-        if (last && last !== '/home/index.html' && /^\/[a-z-]+\/[^/]+\.html$/.test(last)) {
+        if (last && /^(?:\.\.\/|\/)[a-z-]+\/[^/]+\.html$/.test(last)) {
           location.replace(last);
         }
       }

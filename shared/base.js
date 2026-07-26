@@ -67,7 +67,7 @@
     const cfg = window.TOOLS_CONFIG || [];
     for (const g of cfg) {
       for (const it of g.items) {
-        if (it.href === here) return { group: g, item: it };
+        if (new URL(it.href, location.href).pathname === here) return { group: g, item: it };
       }
     }
     return null;

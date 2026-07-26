@@ -1,22 +1,24 @@
 /* app-shell.js — inject the collapsible sidebar and main wrapper. */
 (() => {
   const here = location.pathname;
-  const isHome = here === '/' || here === '/index.html' || here === '/home/index.html';
+  const cfg = window.TOOLS_CONFIG || [];
+  const resolvePath = href => new URL(href, location.href).pathname;
+  const currentItem = cfg.flatMap(group => group.items).find(item => resolvePath(item.href) === here);
+  const isHome = here.endsWith('/home/index.html') || here.endsWith('/index.html') && !currentItem;
 
   // Record last tool (only real tool pages, not the home page itself)
-  if (!isHome && here.endsWith('.html')) {
-    try { localStorage.setItem('mytools.last', here); } catch (_) {}
+  if (!isHome && currentItem) {
+    const recentHref = currentItem.href;
+    try { localStorage.setItem('mytools.last', recentHref); } catch (_) {}
     try {
       const KEY = 'mytools.recent';
       let arr = JSON.parse(localStorage.getItem(KEY) || '[]');
-      arr = arr.filter(x => x !== here);
-      arr.unshift(here);
+      arr = arr.filter(x => x !== recentHref);
+      arr.unshift(recentHref);
       if (arr.length > 8) arr = arr.slice(0, 8);
       localStorage.setItem(KEY, JSON.stringify(arr));
     } catch (_) {}
   }
-
-  const cfg = window.TOOLS_CONFIG || [];
 
   const SIDEBAR_KEY = 'mytools.sidebar.collapsed';
   const GROUP_KEY = 'mytools.sidebar.groups';
@@ -31,8 +33,8 @@
   if (manualCollapsed === '1') sidebar.classList.add('collapsed');
   sidebar.innerHTML = `
     <div class="sidebar-head">
-      <a href="/home/index.html" class="brand-mark" title="MyTools">M</a>
-      <a href="/home/index.html" class="title">MyTools</a>
+      <a href="../home/index.html" class="brand-mark" title="MyTools">M</a>
+      <a href="../home/index.html" class="title">MyTools</a>
       <button class="toggle" id="sidebarToggle" type="button"
         title="收起侧栏" aria-label="收起侧栏" aria-expanded="true"
         aria-controls="sidebarBody">«</button>
@@ -73,7 +75,7 @@
       a.className = 'nav-item';
       a.href = it.href;
       a.title = it.desc || it.label;
-      if (it.href === here) {
+      if (resolvePath(it.href) === here) {
         a.classList.add('active');
         a.setAttribute('aria-current', 'page');
       }

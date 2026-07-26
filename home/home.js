@@ -4,7 +4,7 @@
   const MAX_RECENT = 8;
 
   function pushRecent(href) {
-    if (!href || href === '/home/index.html') return;
+    if (!href || href === '../home/index.html') return;
     let arr = [];
     try { arr = JSON.parse(localStorage.getItem(RECENT_KEY) || '[]'); } catch (_) {}
     arr = arr.filter(x => x !== href);
