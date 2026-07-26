@@ -50,6 +50,40 @@
     });
   }
 
+  const searchInput = document.getElementById('toolSearch');
+  const searchCount = document.getElementById('searchCount');
+  const searchEmpty = document.getElementById('searchEmpty');
+  function filterTools() {
+    const keyword = searchInput.value.trim().toLowerCase();
+    let visibleCount = 0;
+    document.querySelectorAll('.cat-section').forEach((section) => {
+      const groupName = section.querySelector('h2')?.textContent || '';
+      let groupCount = 0;
+      section.querySelectorAll('.tool-card').forEach((card) => {
+        const matched = !keyword || `${groupName} ${card.textContent}`.toLowerCase().includes(keyword);
+        card.hidden = !matched;
+        if (matched) groupCount++;
+      });
+      section.hidden = groupCount === 0;
+      visibleCount += groupCount;
+    });
+    searchCount.textContent = `${visibleCount} 个工具`;
+    searchEmpty.hidden = visibleCount !== 0;
+  }
+  searchInput.addEventListener('input', filterTools);
+  document.addEventListener('keydown', (event) => {
+    if (event.key === '/' && !event.ctrlKey && !event.metaKey && !event.altKey &&
+        !/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName)) {
+      event.preventDefault();
+      searchInput.focus();
+    }
+    if (event.key === 'Escape' && document.activeElement === searchInput) {
+      searchInput.value = '';
+      filterTools();
+      searchInput.blur();
+    }
+  });
+
   // === Render recent section ===
   const recentSection = document.getElementById('recentSection');
   const recentGrid = document.getElementById('recentGrid');
