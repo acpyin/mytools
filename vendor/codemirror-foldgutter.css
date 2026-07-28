@@ -1,0 +1,66 @@
+/* CodeMirror fold gutter — triangle markers in the left gutter */
+.CodeMirror-foldmarker {
+  color: #999;
+  font-family: arial;
+  line-height: .3;
+  cursor: pointer;
+}
+.CodeMirror-foldgutter {
+  width: 1.6em;
+  background: transparent;
+}
+.CodeMirror-foldgutter-open,
+.CodeMirror-foldgutter-folded {
+  cursor: pointer;
+  color: #6b7280;
+  text-align: center;
+}
+.CodeMirror-foldgutter-open:after {
+  content: "\25BE";
+  font-size: 18px;
+  line-height: 1;
+}
+.CodeMirror-foldgutter-folded:after {
+  content: "\25B8";
+  font-size: 18px;
+  line-height: 1;
+}
+.CodeMirror-foldgutter-open:hover,
+.CodeMirror-foldgutter-folded:hover {
+  color: var(--primary, #1b5cea);
+}
+
+/* Tighter integration with our panes */
+.json-editor-host {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.json-editor-host > .CodeMirror {
+  flex: 1;
+  min-height: 0;
+  font-family: "SFMono-Regular", Consolas, Menlo, monospace;
+  font-size: 13px;
+  line-height: 1.55;
+  height: auto !important;
+}
+.json-editor-host > .CodeMirror .CodeMirror-gutters {
+  background: #f8fafc;
+  border-right: 1px solid var(--border, #e2e8f0);
+}
+.json-editor-host > .CodeMirror .CodeMirror-linenumber {
+  padding: 0 6px 0 8px;
+  min-width: 28px;
+  color: #94a3b8;
+  font-size: 12px;
+}
+.json-editor-host > .CodeMirror .CodeMirror-foldgutter {
+  width: 1.8em;
+}
+.json-editor-host > .CodeMirror .CodeMirror-foldgutter-open:after,
+.json-editor-host > .CodeMirror .CodeMirror-foldgutter-folded:after {
+  font-size: 20px;
+}

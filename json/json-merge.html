@@ -4,6 +4,8 @@
 <title>JSON 合并 · MyTools</title>
 <link rel="icon" href="../shared/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../shared/base.css"><link rel="stylesheet" href="../shared/sidebar.css"><link rel="stylesheet" href="../shared/editor.css">
+<link rel="stylesheet" href="../vendor/codemirror.min.css">
+<link rel="stylesheet" href="../vendor/codemirror-foldgutter.css">
 <style>
   .merge-workspace {
     display: grid;
@@ -53,12 +55,14 @@
 </head><body>
 <div class="topbar"><div class="crumb-bar"><span>MyTools</span><span class="sep">/</span><span>JSON</span><span class="sep">/</span><span class="here">JSON 合并</span></div></div>
 <div class="toolbar">
-  <div class="group">
+<div class="group">
     <button class="btn primary" id="mergeBtn">合并 →</button>
     <label class="checkbox-row"><input type="checkbox" id="bWinChk"> b 优先（同名键）</label>
     <button class="btn" id="copyR">复制</button>
     <button class="btn" id="clearBtn">清空</button>
     <button class="btn" id="sampleBtn">示例</button>
+    <button class="btn" id="foldBtn" title="折叠所有 { 和 [">折叠全部</button>
+    <button class="btn" id="unfoldBtn" title="展开所有折叠块">展开全部</button>
   </div>
   <div id="status" class="status-msg" style="margin-left:auto;"></div>
 </div>
@@ -77,5 +81,11 @@
   </section>
 </div>
 <script src="../shared/base.js"></script><script src="../shared/tools-config.js"></script><script src="../shared/app-shell.js"></script>
-<script src="json-merge.js"></script>
+<script defer src="../vendor/codemirror.min.js"></script>
+<script defer src="../vendor/codemirror-javascript.min.js"></script>
+<script defer src="../vendor/codemirror-foldcode.min.js"></script>
+<script defer src="../vendor/codemirror-foldgutter.min.js"></script>
+<script defer src="../vendor/codemirror-brace-fold.min.js"></script>
+<script defer src="../shared/json-editor.js"></script>
+<script defer src="json-merge.js"></script>
 </body></html>

@@ -3,9 +3,8 @@
   const jp = document.getElementById('jp');
   const out = document.getElementById('out');
   const status = document.getElementById('status');
-  const setStatus = (s,c='') => { status.textContent=s; status.className='status-msg '+c; };
+  const setStatus = (s, c = '') => { status.textContent = s; status.className = 'status-msg ' + c; };
 
-  // Minimal JSONPath: supports $, $..x, .key, [n], [n:m], [*], ?(@)
   function lookup(obj, expr) {
     if (expr === '$') return [obj];
     if (!expr) return [obj];
@@ -21,7 +20,6 @@
   }
 
   function parseExpr(expr) {
-    // strip leading $; tokenize path into segments: .x, ..x, [n], [*]
     const segs = [];
     let i = 0;
     const s = expr.startsWith('$') ? expr.slice(1) : expr;
@@ -29,7 +27,7 @@
     while (i < s.length) {
       const c = s[i];
       if (c === '.') {
-        if (s[i+1] === '.') {
+        if (s[i + 1] === '.') {
           if (buf) { segs.push({ type: 'key', value: buf }); buf = ''; }
           segs.push({ type: 'desc' }); i += 2;
           let name = '';
@@ -67,7 +65,6 @@
       return out === undefined ? [] : [out];
     }
     if (seg.type === 'desc') {
-      // recursively gather all values from object/array
       const out = [];
       function walk(o) {
         if (o === null) return;
@@ -98,41 +95,57 @@
         return [];
       }
       if (inner.includes(':')) {
-        const [s,e] = inner.split(':').map(x => x === '' ? null : parseInt(x, 10));
+        const [s, e] = inner.split(':').map(x => x === '' ? null : parseInt(x, 10));
         if (Array.isArray(v)) return v.slice(s ?? 0, e ?? v.length);
         return [];
       }
-      // '?(@.x == v)' is a filter - light impl
       if (inner.startsWith('?')) return [];
       return [];
     }
     return [];
   }
 
+  let lastResults = [];
+
   function run() {
     let obj;
-    try { obj = JSON.parse(json.value); } catch (e) { setStatus('JSON 解析失败：'+e.message, 'err'); return; }
+    try { obj = JSON.parse(json.value); } catch (e) { setStatus('JSON 解析失败：' + e.message, 'err'); return; }
     try {
       const expr = jp.value.trim();
       const results = lookup(obj, expr);
+      lastResults = results;
       if (!results.length) { out.textContent = '(空)'; setStatus('无匹配', 'err'); return; }
       out.textContent = results.map(r => typeof r === 'string' ? '"' + r + '"' : JSON.stringify(r, null, 2)).join('\n----\n');
       setStatus(`✓ ${results.length} 项`, 'ok');
-    } catch (e) { setStatus('JSONPath 错误：'+e.message, 'err'); }
+    } catch (e) { setStatus('JSONPath 错误：' + e.message, 'err'); }
+  }
+
+  function copyAll() {
+    if (!lastResults.length) { window.toast('内容为空'); return; }
+    const text = lastResults.map(r => typeof r === 'string' ? '"' + r + '"' : JSON.stringify(r, null, 2)).join('\n----\n');
+    window.copyText(text, '已复制');
   }
 
   function init() {
+    const jsonEd = window.JsonEditor.upgrade(json, { mode: 'application/json' });
+
     document.getElementById('runBtn').addEventListener('click', run);
-    document.getElementById('copyAll').addEventListener('click', () => window.copyText(out.textContent, '已复制'));
-    document.getElementById('clearBtn').addEventListener('click', () => { json.value=''; out.textContent='—'; setStatus(''); });
+    document.getElementById('copyAll').addEventListener('click', copyAll);
+    document.getElementById('clearBtn').addEventListener('click', () => { json.value = ''; out.textContent = '—'; setStatus(''); });
     document.getElementById('sampleBtn').addEventListener('click', () => {
       json.value = JSON.stringify({ store: { book: [{ title: 'A' }, { title: 'B' }], pen: 5 }, name: 'shop' }, null, 2);
       jp.value = '$.store.book[*].title';
       run();
     });
+    document.getElementById('foldBtn').addEventListener('click', () => jsonEd && jsonEd.foldAll());
+    document.getElementById('unfoldBtn').addEventListener('click', () => jsonEd && jsonEd.unfoldAll());
+
     json.value = JSON.stringify({ store: { book: [{ title: 'A' }, { title: 'B' }], pen: 5 }, name: 'shop' }, null, 2);
     jp.value = '$.store.book[*].title';
     run();
+
+    setTimeout(() => jsonEd.refresh(), 0);
+    window.addEventListener('resize', () => jsonEd.refresh());
   }
-  if (document.readyState==='loading') document.addEventListener('DOMContentLoaded', init); else init();
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();

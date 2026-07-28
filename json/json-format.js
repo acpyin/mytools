@@ -36,12 +36,11 @@
   }
 
   function jsonToDict(s) {
-    // JSON → Python dict style
     return s
       .replace(/true/g, 'True')
       .replace(/false/g, 'False')
       .replace(/null/g, 'None')
-      .replace(/^\[$/, '['); // structure unchanged
+      .replace(/^\[$/, '[');
   }
 
   function dictToJson(s) {
@@ -79,11 +78,8 @@
     }
   }
 
-  // Returns { value, kind } | null
-  // kind: 'json' | 'escaped' | 'dict'
   function parseAny(s) {
     const t = s.trim();
-    // Try fully-escaped quoted string first: "{\"a\":1}" — must be unescaped first
     if (t.startsWith('"') && t.endsWith('"') && t.length >= 2) {
       try {
         const inner = JSON.parse(s);
@@ -93,12 +89,10 @@
         }
       } catch (_) {}
     }
-    // Try direct JSON object/array
     try {
       const v = JSON.parse(s);
       if (v && typeof v === 'object') return { value: v, kind: 'json' };
     } catch (_) {}
-    // Python DICT-like: { 'a': 1, "b": True } or {a: 1}
     if (/^[{[]/.test(t)) {
       const c = t
         .replace(/\bNone\b/g, 'null')
@@ -164,7 +158,6 @@
   }
 
   function rmQuotes() {
-    // remove quotes around JSON keys
     try {
       right.value = left.value
         .replace(/([{,]\s*)"([A-Za-z0-9_]+)"(\s*:)/g, '$1$2$3');
@@ -174,6 +167,10 @@
   }
 
   function init() {
+    // Upgrade both textareas to JSON editors with brace folding
+    const leftEd = window.JsonEditor.upgrade(left, { mode: 'application/json' });
+    const rightEd = window.JsonEditor.upgrade(right, { mode: 'application/json' });
+
     document.getElementById('formatBtn').addEventListener('click', () => tryFormat());
     document.getElementById('minifyBtn').addEventListener('click', minify);
     document.getElementById('escapeBtn').addEventListener('click', escape);
@@ -187,21 +184,33 @@
       tryFormat();
     });
     document.getElementById('copyBtn').addEventListener('click', () => window.copyText(right.value, '已复制'));
+    document.getElementById('foldBtn').addEventListener('click', () => {
+      leftEd && leftEd.foldAll();
+      rightEd && rightEd.foldAll();
+    });
+    document.getElementById('unfoldBtn').addEventListener('click', () => {
+      leftEd && leftEd.unfoldAll();
+      rightEd && rightEd.unfoldAll();
+    });
 
     document.getElementById('indentSel').addEventListener('change', (e) => { state.indent = parseInt(e.target.value, 10); tryFormat(); });
     document.getElementById('sortChk').addEventListener('change', (e) => { state.sort = e.target.checked; tryFormat(); });
     document.getElementById('bigIntChk').addEventListener('change', (e) => { state.bigInt = e.target.checked; tryFormat(); });
 
     let inputTimer = null;
-    left.addEventListener('input', () => {
+    leftEd.cm.on('change', () => {
       updateMeta();
       clearTimeout(inputTimer);
       inputTimer = setTimeout(() => tryFormat(false), 350);
     });
-    right.addEventListener('input', updateMeta);
+    rightEd.cm.on('change', updateMeta);
 
     left.value = `{"name":"MyTools","version":"1.0.0","tags":["json","format"],"features":{"compact":false,"sort":true}}`;
     tryFormat();
+
+    // Refresh CM after layout settles
+    setTimeout(() => { leftEd.refresh(); rightEd.refresh(); }, 0);
+    window.addEventListener('resize', () => { leftEd.refresh(); rightEd.refresh(); });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
